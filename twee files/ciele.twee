@@ -1,0 +1,2426 @@
+:: StoryTitle
+Ciele's Labyrinth
+
+
+:: StoryData
+{
+	"ifid": "2EBE29FA-4C6C-48A0-9CC3-A17932AEF14A",
+	"format": "SugarCube",
+	"format-version": "2.21.0",
+	"start": "character_creation",
+
+	"zoom": 1
+}
+
+
+:: Story Stylesheet [stylesheet]
+body, tw-story
+{
+  font-family: Times New;
+  font-size: 14px;
+}
+
+::StoryInit
+<<silently>>
+<<include "character_attributes_init">>
+<<include "npc_init">>
+<<set $end = false>>
+
+
+<</silently>>
+
+::PassageHeader
+<<silently>>
+<<if $PC.will == 0 and $end == false>>
+	<<set $end = true>>
+	<<goto "bad_end_no_will">>
+<</if>>
+<</silently>>
+
+
+
+:: Intro [Exposition]
+
+Hundreds of years ago, the depraved sorceress Ciele created this labyrith to safeguard her power once she passed into the next world. Only those who become as perverted and lustful as Ciele herself can reach its centre - and the unimaginable wealth that must wait there.
+
+
+It's time to enter your name in the record of those who have attempted this challenge. <<textbox "$PC.name" "Your name" "Town Square">>
+
+
+
+::character_attributes_init
+<<set $PC = {
+  "name": "",
+  "will": 100,
+  "baseLust": 0,
+  "currentLustCount": 0,
+  "currentLustLevel": 0,
+  "orgasmCount": 0,
+  "sexCount": 0,
+  "analCount": 0,
+  "vaginalCount": 0,
+  "forcedCount": 0,
+  "masturbateCount": 0,
+  "build": random(3),
+  "skin": random(7),
+  "eyes": random(7),
+  "hairLength": random(6),
+  "hairType": random(2),
+  "hairColType": either("normal", "red"),
+  "hairCol": random(5),
+  "breastSize": random(9),
+  "nippleColType": either("brown", "pink"),
+  "nippleCol": random(4),
+  "nippleSize": random(5),
+  "pubicHair": random(2),
+  "oralXP": 0,
+  "vaginalXP": 0,
+  "analXP": 0,
+  "pleasuringXP": 0,
+  "pregnant": 0,
+  "lactation": 0,
+  "milkLevel": 0,
+  "possessed": "no",
+  "infected": "no",
+  "parasite": "no",
+  "parasiteStage": 0,
+  "inventory": {
+    "headSlot": "no",
+    "braSlot": "simple cotton bra",
+    "harnessSlot": "no",
+    "shirtSlot": "rough tunic",
+    "armsSlot": "no",
+    "pantiesSlot": "simple cotton panties",
+    "underbottomsSlot": "warm leggings",
+    "bottomsSlot": "rough skirt",
+    "socksSlot": "adventurer's socks",
+    "shoesSlot": "simple boots",
+    "mouthSlot": "no",
+    "neckSlot": "no",
+    "breastsSlot": "no",
+    "leftNippleSlot": "no",
+    "rightNippleSlot": "no",
+    "pussySlot": "no",
+    "clitSlot": "no",
+    "assSlot": "no"
+    }
+  }>>
+
+/* Builds come in four varieties, but aren't incremented. */
+<<set $buildList = [
+"petite",
+"medium",
+"athletic",
+"voluptuous"
+]>>
+
+/* Skin colour comes in eight varieties, values 0-7. */
+<<set $skinList = [
+"pale",
+"light",
+"lightly-tanned",
+"tan",
+"olive",
+"light brown",
+"nut-brown",
+"dark brown"
+]>>
+
+/* Hair type comes in three varieties, but is not incremented. */
+<<set $hairTypeList = [
+"straight",
+"wavy",
+"curly"
+]>>
+
+/* Hair colour comes in two varieties, normal and red. Each has values 0-5. */
+<<set $hairColList = {
+"normal": [
+  "white",
+  "blonde",
+  "light brown",
+  "brown",
+  "dark brown",
+  "black"],
+"red": [
+  "white",
+  "strawberry-blonde",
+  "ginger",
+  "red",
+  "chestnut",
+  "black"]
+}>>
+
+/* Hair length comes in seven varieties, with values 0-6. */
+<<set $hairLengthList = [
+"close-shaven",
+"short",
+"shoulder-length",
+"long",
+"hip-length",
+"knee-length",
+"floor-length"
+]>>
+
+/* Eye colour comes in eight varieties, with values 0-7. */
+<<set $eyesList = [
+"grey",
+"ice-blue",
+"blue",
+"blue-green",
+"green",
+"hazel",
+"brown",
+"dark brown"
+]>>
+
+/* Breast size comes in ten varieties, with values 0-9. */
+<<set $breastSizeList = [
+"A-cup",
+"B-cup",
+"C-cup",
+"D-cup",
+"E-cup",
+"F-cup",
+"G-cup",
+"H-cup",
+"I-cup",
+"J-cup"
+]>>
+
+/* Breast size adjectives - there are three for each size, using the same 0-9 range. */
+<<set $breastSizeWordList = {
+  0: ["diminuitive", "tiny", "cute"],
+  1: ["cute", "little", "perky"],
+  2: ["perky", "firm", "taut"],
+  3: ["taut", "proud", "generous"],
+  4: ["generous", "buxom", "plump"],
+  5: ["plump", "impressive", "considerable"],
+  6: ["considerable", "pendulous", "heavy"],
+  7: ["heavy", "bounteous", "huge"],
+  8: ["huge", "ungainly", "massive"],
+  9: ["massive", "gigantic", "cartoonish"]
+}>>
+
+/* Nipple colour comes in two varieties, brown and pink. Each has values 0-4. */
+<<set $nippleColList = {
+"brown": [
+  "pale brown",
+  "russet",
+  "chocolate-brown",
+  "dark brown",
+  "black-brown",
+  ],
+"pink": [
+  "pale pink",
+  "light pink",
+  "pink",
+  "dark pink",
+  "ruby",
+  ]
+}>>
+
+/* Nipple colour comes in six varieties, with values 0-5. */
+<<set $nippleSizeList = [
+"tiny",
+"small",
+"average",
+"large",
+"huge",
+"long, thick"
+]>>
+
+/* Pubic hair comes in three varieties, with values 0-2. */
+<<set $pubicHairList = [
+"clean-shaven",
+"trimmed",
+"left natural"
+]>>
+
+/* Lust builds from 0 to 9, at which point it becomes uncontrollable and must be released. */
+<<set $playerLustList = [
+"You don't feel noticably turned on.",
+"You feel the first stirrings of heat between your legs.",
+"There's a noticeable warmth building in your sex.",
+"You are undeniably aroused.",
+"The heat between your legs is becoming insistent.",
+"You feel really turned on.",
+"Your cunt is aching with lust.",
+"You're so turned on that it's hard to think straight.",
+"You are desperately aroused.",
+"You are on the verge of losing yourself to the burning lust that is filling your body.",
+"You are completely consumed with lust, unable to think about anything other than being fucked and used and the sweet release of climax."
+]>>
+
+/* Pregnancy builds from 0 to 9, incrementing at different speeds for different impregnations. 9 has no description because reaching that count triggers a birth cutscene. */
+<<set $playerPregnancyList = [
+"You are not pregnant.",
+"You feel a little odd, as though there is a warmth in your belly.",
+"There is an unmistakeable sense of something quickening in your belly.",
+"Your belly is a little more rounded than ususal, hinting at what is growing inside.",
+"Your pregnancy is now showing clearly, although it still has a ways to go.",
+"The size of your pregnant stomach is beginning to become an inconvenience.",
+"Your pregnancy is now apparent at a glance - there is no hiding your swollen belly.",
+"You are heavily pregnant.",
+"Your belly is round and swollen fit to burst - soon you will give birth to the new life within you."
+]>>
+
+/* Lactation occurs on a speed scale from 0 to 5 and can be increased or decreased by various things. */
+<<set $playerLactationList = [
+"Your breasts feel lighter after being emptied of their milk.",
+"Your breasts are beginning to feel heavier as they fill with milk.",
+"Your breasts are swollen with milk.",
+"Your breasts are uncomfortably full, and milk occassionaly drips from your teats.",
+"Milk is constantly dripping from your swollen teats as they ache to be drained."
+]>>
+
+/* Parasites build from 0 to 3, incrementing at different speeds for different parasites. Stage 3 triggers a cutscene of the parasite's ultimate effect. */
+<<set $playerParasiteList = {
+  "breeder tentacle": [
+    "You have the unsettling feeling of something lodged deep in your ass.",
+    "To your horror, something is growing in your ass - and you can feel it stir occassionally.",
+    "Your ass is filled by a thick tentacle that seems to have grown from within you."
+  ]
+}>>
+
+:: character_creation [start]
+
+Where are you from?
+You are from the cold northen regions of <<link "the Vales" "Intro">><<generatecharacter "Valewain">><<set $PC = $tempChar>><<unset $tempChar>><</link>>
+You have travelled from the populous temperate lands of <<link "Laith" "Intro">><<generatecharacter "Laithlander">><<set $PC = $tempChar>><<unset $tempChar>><</link>>
+You hail from the sun-bathed southern continent <<link "Merrin" "Intro">><<generatecharacter "Merrinan">><<set $PC = $tempChar>><<unset $tempChar>><</link>>
+You are a world-traveler, the product of <<link "many peoples and places" "Intro">><<generatecharacter "Random">><<set $PC = $tempChar>><<unset $tempChar>><</link>>
+
+<<link "I want full control" "character_customise">><</link>>
+
+:: character_customise
+What is your build?
+<<listbox "$PC.build">>
+  <<option "petite" 0>>
+  <<option "medium" 1>>
+  <<option "athletic" 2>>
+  <<option "voluptuous" 3>>
+<</listbox>>
+
+What colour is your skin?
+<<listbox "$PC.skin">>
+  <<option "pale" 0>>
+  <<option "light" 1>>
+  <<option "lightly-tanned" 2>>
+  <<option "tan" 3>>
+  <<option "olive" 4>>
+  <<option "light brown" 5>>
+  <<option "nut-brown" 6>>
+  <<option "dark brown" 7>>
+<</listbox>>
+
+What type of hair do you have?
+<<listbox "$PC.hairType">>
+  <<option "straight" 0>>
+  <<option "wavy" 1>>
+  <<option "curly" 2>>
+<</listbox>>
+
+What colour is your hair?
+<<listbox "_tempHair">>
+  <<option "white">>
+  <<option "blonde">>
+  <<option "light brown">>
+  <<option "brown">>
+  <<option "dark brown">>
+  <<option "black">>
+  <<option "white2">>
+  <<option "strawberry-blonde">>
+  <<option "ginger">>
+  <<option "red">>
+  <<option "chestnut">>
+  <<option "black2">>
+<</listbox>>
+
+<<link "set hair">>
+<<silently>><<switch _tempHair>>
+  <<case "white">>
+  <<set $PC.hairColType = "normal">>
+  <<set $PC.hairCol = 0>>
+  <<case "blonde">>
+  <<set $PC.hairColType = "normal">>
+  <<set $PC.hairCol = 1>>
+  <<case "light brown">>
+  <<set $PC.hairColType = "normal">>
+  <<set $PC.hairCol = 2>>
+  <<case "brown">>
+  <<set $PC.hairColType = "normal">>
+  <<set $PC.hairCol = 3>>
+  <<case "dark brown">>
+  <<set $PC.hairColType = "normal">>
+  <<set $PC.hairCol = 4>>
+  <<case "black">>
+  <<set $PC.hairColType = "normal">>
+  <<set $PC.hairCol = 5>>
+  <<case "white2">>
+  <<set $PC.hairColType = "red">>
+  <<set $PC.hairCol = 0>>
+  <<case "strawberry-blonde">>
+  <<set $PC.hairColType = "red">>
+  <<set $PC.hairCol = 1>>
+  <<case "ginger">>
+  <<set $PC.hairColType = "red">>
+  <<set $PC.hairCol = 2>>
+  <<case "red">>
+  <<set $PC.hairColType = "red">>
+  <<set $PC.hairCol = 3>>
+  <<case "chestnut">>
+  <<set $PC.hairColType = "red">>
+  <<set $PC.hairCol = 4>>
+  <<case "black2">>
+  <<set $PC.hairColType = "red">>
+  <<set $PC.hairCol = 5>>
+<</switch>><</silently>>
+<</link>>
+
+How long is your hair?
+<<listbox "$PC.hairLength">>
+  <<option "close-shaven" 0>>
+  <<option "short" 1>>
+  <<option "shoulder-length" 2>>
+  <<option "long" 3>>
+  <<option "hip-length" 4>>
+  <<option "knee-length" 5>>
+  <<option "floor-length" 6>>
+<</listbox>>
+
+What colour are your eyes?
+<<listbox "$PC.eyes">>
+  <<option "grey" 0>>
+  <<option "ice-blue" 1>>
+  <<option "blue" 2>>
+  <<option "blue-green" 3>>
+  <<option "green" 4>>
+  <<option "hazel" 5>>
+  <<option "brown" 6>>
+  <<option "dark brown" 7>>
+<</listbox>>
+
+What size are your breasts?
+<<listbox "$PC.breastSize">>
+  <<option "A-cup" 0>>
+  <<option "B-cup" 1>>
+  <<option "C-cup" 2>>
+  <<option "D-cup" 3>>
+  <<option "E-cup" 4>>
+  <<option "F-cup" 5>>
+  <<option "G-cup" 6>>
+  <<option "H-cup" 7>>
+  <<option "I-cup" 8>>
+  <<option "J-cup" 9>>
+<</listbox>>
+
+What colour are your nipples?
+<<listbox "_tempNipples">>
+  <<option "pale brown">>
+  <<option "russet">>
+  <<option "chocolate-brown">>
+  <<option "dark brown">>
+  <<option "black-brown">>
+  <<option "pale pink">>
+  <<option "light pink">>
+  <<option "pink">>
+  <<option "dark pink">>
+  <<option "reddish-pink">>
+<</listbox>>
+
+<<link "set nipple colour">>
+<<silently>><<switch _tempNipples>>
+  <<case "pale brown">>
+  <<set $PC.nippleColType = "brown">>
+  <<set $PC.nippleCol = 0>>
+  <<case "russet">>
+  <<set $PC.nippleColType = "brown">>
+  <<set $PC.nippleCol = 1>>
+  <<case "chocolate-brown">>
+  <<set $PC.nippleColType = "brown">>
+  <<set $PC.nippleCol = 2>>
+  <<case "dark brown">>
+  <<set $PC.nippleColType = "brown">>
+  <<set $PC.nippleCol = 3>>
+  <<case "black-brown">>
+  <<set $PC.nippleColType = "brown">>
+  <<set $PC.nippleCol = 4>>
+  <<case "pale pink">>
+  <<set $PC.nippleColType = "pink">>
+  <<set $PC.nippleCol = 0>>
+  <<case "light pink">>
+  <<set $PC.nippleColType = "pink">>
+  <<set $PC.nippleCol = 1>>
+  <<case "pink">>
+  <<set $PC.nippleColType = "pink">>
+  <<set $PC.nippleCol = 2>>
+  <<case "dark pink">>
+  <<set $PC.nippleColType = "pink">>
+  <<set $PC.nippleCol = 3>>
+  <<case "ruby">>
+  <<set $PC.nippleColType = "pink">>
+  <<set $PC.nippleCol = 4>>
+<</switch>><</silently>><</link>>
+
+What size are your nipples?
+<<listbox "$PC.nippleSize">>
+  <<option "tiny" 0>>
+  <<option "small" 1>>
+  <<option "average" 2>>
+  <<option "large" 3>>
+  <<option "huge" 4>>
+  <<option "long, thick" 5>>
+<</listbox>>
+
+What length is your pubic hair?
+<<listbox "$PC.nippleSize">>
+  <<option "clean-shaven" 0>>
+  <<option "trimmed" 1>>
+  <<option "left natural" 2>>
+<</listbox>>
+
+[[Intro]]
+
+:: character_randomiser [widget]
+<<widget "generatecharacter">><<silently>>
+<<if $args[0] == "Valewain">>
+<<set $tempChar = {
+  "name": "",
+  "will": 100,
+  "baseLust": 0,
+  "currentLustCount": 0,
+  "currentLustLevel": 0,
+  "orgasmCount": 0,
+  "sexCount": 0,
+  "forcedCount": 0,
+  "masturbateCount": 0,
+  "build": random(1),
+  "skin": random(1),
+  "eyes": random(2),
+  "hairLength": random(1, 4),
+  "hairType": random(1),
+  "hairColType": either("normal", "red"),
+  "hairCol": random(2),
+  "breastSize": random(2),
+  "nippleColType": "pink",
+  "nippleCol": random(2),
+  "nippleSize": random(1, 3),
+  "pubicHair": random(2),
+  "oralXP": 0,
+  "vaginalXP": 0,
+  "analXP": 0,
+  "pleasuringXP": 0,
+  "pregnant": 0,
+  "lactation": 0,
+  "milkLevel": 0,
+  "possessed": "no",
+  "infected": "no",
+  "parasite": "no",
+  "parasiteStage": 0
+  }>>
+
+<<elseif $args[0] == "Laithlander">>
+<<set $tempChar = {
+  "name": "",
+  "will": 100,
+  "baseLust": 0,
+  "currentLustCount": 0,
+  "currentLustLevel": 0,
+  "orgasmCount": 0,
+  "sexCount": 0,
+  "forcedCount": 0,
+  "masturbateCount": 0,
+  "build": random(1, 2),
+  "skin": random(5, 7),
+  "eyes": random(5, 7),
+  "hairLength": random(1, 4),
+  "hairType": random(2),
+  "hairColType": "normal",
+  "hairCol": random(3, 5),
+  "breastSize": random(1, 3),
+  "nippleColType": "brown",
+  "nippleCol": random(2, 4),
+  "nippleSize": random(1, 3),
+  "pubicHair": random(2),
+  "oralXP": 0,
+  "vaginalXP": 0,
+  "analXP": 0,
+  "pleasuringXP": 0,
+  "pregnant": 0,
+  "lactation": 0,
+  "milkLevel": 0,
+  "possessed": "no",
+  "infected": "no",
+  "parasite": "no",
+  "parasiteStage": 0,
+  "inventory": {
+    "headSlot": "no",
+    "braSlot": "simple cotton bra",
+    "harnessSlot": "no",
+    "shirtSlot": "rough tunic",
+    "armsSlot": "no",
+    "pantiesSlot": "simple cotton panties",
+    "underbottomsSlot": "warm leggings",
+    "bottomsSlot": "rough skirt",
+    "socksSlot": "adventurer's socks",
+    "shoesSlot": "simple boots",
+    "mouthSlot": "no",
+    "neckSlot": "no",
+    "breastsSlot": "no",
+    "leftNippleSlot": "no",
+    "rightNippleSlot": "no",
+    "pussySlot": "no",
+    "clitSlot": "no",
+    "assSlot": "no"
+    }
+  }>>
+
+  <<elseif $args[0] == "Merrinan">>
+  <<set $tempChar = {
+    "name": "",
+    "will": 100,
+    "baseLust": 0,
+    "currentLustCount": 0,
+    "currentLustLevel": 0,
+    "orgasmCount": 0,
+    "sexCount": 0,
+    "forcedCount": 0,
+    "masturbateCount": 0,
+    "build": either(1, 3),
+    "skin": random (2, 5),
+    "eyes": random(2, 5),
+    "hairLength": random(1, 4),
+    "hairType": random(2),
+    "hairColType": either("normal", "red"),
+    "hairCol": random(3, 5),
+    "breastSize": random(2, 4),
+    "nippleColType": either("brown", "pink"),
+    "nippleCol": random(1, 2),
+    "nippleSize": random(1, 3),
+    "pubicHair": random(2),
+    "oralXP": 0,
+    "vaginalXP": 0,
+    "analXP": 0,
+    "pleasuringXP": 0,
+    "pregnant": 0,
+    "lactation": 0,
+    "milkLevel": 0,
+    "possessed": "no",
+    "infected": "no",
+    "parasite": "no",
+    "parasiteStage": 0,
+    "inventory": {
+      "headSlot": "no",
+      "braSlot": "simple cotton bra",
+      "harnessSlot": "no",
+      "shirtSlot": "rough tunic",
+      "armsSlot": "no",
+      "pantiesSlot": "simple cotton panties",
+      "underbottomsSlot": "warm leggings",
+      "bottomsSlot": "rough skirt",
+      "socksSlot": "adventurer's socks",
+      "shoesSlot": "simple boots",
+      "mouthSlot": "no",
+      "neckSlot": "no",
+      "breastsSlot": "no",
+      "leftNippleSlot": "no",
+      "rightNippleSlot": "no",
+      "pussySlot": "no",
+      "clitSlot": "no",
+      "assSlot": "no"
+      }
+    }>>
+
+<<elseif $args[0] == "Random">>
+<<set $tempChar = {
+  "name": "",
+  "will": 100,
+  "baseLust": 0,
+  "currentLustCount": 0,
+  "currentLustLevel": 0,
+  "orgasmCount": 0,
+  "sexCount": 0,
+  "forcedCount": 0,
+  "masturbateCount": 0,
+  "build": random(3),
+  "skin": random(7),
+  "eyes": random(7),
+  "hairLength": random(6),
+  "hairType": random(2),
+  "hairColType": either("normal", "red"),
+  "hairCol": random(5),
+  "breastSize": random(9),
+  "nippleColType": either("brown", "pink"),
+  "nippleCol": random(4),
+  "nippleSize": random(5),
+  "pubicHair": random(2),
+  "oralXP": 0,
+  "vaginalXP": 0,
+  "analXP": 0,
+  "pleasuringXP": 0,
+  "pregnant": 0,
+  "lactation": 0,
+  "milkLevel": 0,
+  "possessed": "no",
+  "infected:": "no",
+  "parasite": "no",
+  "parasiteStage": 0,
+  "inventory": {
+    "headSlot": "no",
+    "braSlot": "simple cotton bra",
+    "harnessSlot": "no",
+    "shirtSlot": "rough tunic",
+    "armsSlot": "no",
+    "pantiesSlot": "simple cotton panties",
+    "underbottomsSlot": "warm leggings",
+    "bottomsSlot": "rough skirt",
+    "socksSlot": "adventurer's socks",
+    "shoesSlot": "simple boots",
+    "mouthSlot": "no",
+    "neckSlot": "no",
+    "breastsSlot": "no",
+    "leftNippleSlot": "no",
+    "rightNippleSlot": "no",
+    "pussySlot": "no",
+    "clitSlot": "no",
+    "assSlot": "no"
+    }
+  }>>
+  <</if>>
+
+<</silently>><</widget>>
+
+::npc_init
+<<set $party = ["priestess"]>>
+<<set $priestess = false>>
+<<set $alanja = {
+  "name": "Alanja",
+  "will": 80,
+  "baseLust": 30,
+  "currentLustCount": 30,
+  "currentLustLevel": 2,
+  "orgasmCount": 0,
+  "sexCount": 0,
+  "forcedCount": 0,
+  "sexWithPlayer": false,
+  "build": 0,
+  "skin": 0,
+  "eyes": 1,
+  "hairLength": 3,
+  "hairType": 0,
+  "hairColType": "red",
+  "hairCol": 1,
+  "breastSize": 2,
+  "nippleColType": "pink",
+  "nippleCol": 1,
+  "nippleSize": 1,
+  "pubicHair": 0,
+  "oralXP": 200,
+  "vaginalXP": 100,
+  "analXP": 100,
+  "pleasuringXP": 200,
+  "pregnant": 0,
+  "lactation": 0,
+  "milkLevel": 0,
+  "possessed": "no",
+  "infected:": "no",
+  "parasite": "no",
+  "parasiteStage": 0,
+  "inventory": {
+    "headSlot": "no",
+    "braSlot": "no",
+    "harnessSlot": "no",
+    "shirtSlot": "thin white priestess' robe",
+    "armsSlot": "no",
+    "pantiesSlot": "no",
+    "underbottomsSlot": "no",
+    "bottomsSlot": "thin white priestess' robe",
+    "socksSlot": "white cotton socks",
+    "shoesSlot": "simple boots",
+    "mouthSlot": "no",
+    "neckSlot": "no",
+    "breastsSlot": "no",
+    "leftNippleSlot": "no",
+    "rightNippleSlot": "no",
+    "pussySlot": "no",
+    "clitSlot": "no",
+    "assSlot": "no"
+    }
+  }>>
+
+  <<set $raia = {
+    "name": "Raia",
+    "will": 80,
+    "baseLust": 30,
+    "currentLustCount": 30,
+    "currentLustLevel": 2,
+    "orgasmCount": 0,
+    "sexCount": 0,
+    "forcedCount": 0,
+    "sexWithPlayer": false,
+    "build": 1,
+    "skin": 6,
+    "eyes": 5,
+    "hairLength": 2,
+    "hairType": 2,
+    "hairColType": "normal",
+    "hairCol": 5,
+    "breastSize": 3,
+    "nippleColType": "brown",
+    "nippleCol": 3,
+    "nippleSize": 2,
+    "pubicHair": 1,
+    "oralXP": 100,
+    "vaginalXP": 200,
+    "analXP": 100,
+    "pleasuringXP": 200,
+    "pregnant": 0,
+    "lactation": 0,
+    "milkLevel": 0,
+    "possessed": "no",
+    "infected:": "no",
+    "parasite": "no",
+    "parasiteStage": 0,
+    "inventory": {
+      "headSlot": "no",
+      "braSlot": "no",
+      "harnessSlot": "no",
+      "shirtSlot": "thin white priestess' robe",
+      "armsSlot": "no",
+      "pantiesSlot": "no",
+      "underbottomsSlot": "no",
+      "bottomsSlot": "thin white priestess' robe",
+      "socksSlot": "white cotton socks",
+      "shoesSlot": "simple boots",
+      "mouthSlot": "no",
+      "neckSlot": "no",
+      "breastsSlot": "no",
+      "leftNippleSlot": "no",
+      "rightNippleSlot": "no",
+      "pussySlot": "no",
+      "clitSlot": "no",
+      "assSlot": "no"
+      }
+    }>>
+
+    <<set $jeneae = {
+      "name": "Jeneae",
+      "will": 80,
+      "baseLust": 30,
+      "currentLustCount": 30,
+      "currentLustLevel": 2,
+      "orgasmCount": 0,
+      "sexCount": 0,
+      "forcedCount": 0,
+      "sexWithPlayer": false,
+      "build": 3,
+      "skin": 4,
+      "eyes": 4,
+      "hairLength": 4,
+      "hairType": 1,
+      "hairColType": "normal",
+      "hairCol": 5,
+      "breastSize": 4,
+      "nippleColType": "brown",
+      "nippleCol": 1,
+      "nippleSize": 3,
+      "pubicHair": 2,
+      "oralXP": 100,
+      "vaginalXP": 100,
+      "analXP": 200,
+      "pleasuringXP": 200,
+      "pregnant": 0,
+      "lactation": 0,
+      "milkLevel": 0,
+      "possessed": "no",
+      "infected:": "no",
+      "parasite": "no",
+      "parasiteStage": 0,
+      "inventory": {
+        "headSlot": "no",
+        "braSlot": "no",
+        "harnessSlot": "no",
+        "shirtSlot": "thin white priestess' robe",
+        "armsSlot": "no",
+        "pantiesSlot": "no",
+        "underbottomsSlot": "no",
+        "bottomsSlot": "thin white priestess' robe",
+        "socksSlot": "white cotton socks",
+        "shoesSlot": "simple boots",
+        "mouthSlot": "no",
+        "neckSlot": "no",
+        "breastsSlot": "no",
+        "leftNippleSlot": "no",
+        "rightNippleSlot": "no",
+        "pussySlot": "no",
+        "clitSlot": "no",
+        "assSlot": "no"
+        }
+
+      }>>
+
+
+
+:: alert_widget [widget]
+<<widget "alert">><<silently>>
+<<set $alertType = $args[0]>>
+<<script>>
+Dialog.setup("Alert", "alert");
+Dialog.wiki(Story.get("popup_alert").processText());
+Dialog.open();
+<</script>>
+<</silently>><</widget>>
+
+::popup_alert
+<<if $alertType == "milk">>
+<<include "milk_alert">>
+<</if>>
+
+::milk_alert
+$playerMilkMessage
+<<if $forceMilking == 1>>
+The pain from your milk-filled breasts is agonising; they need to be milked, now!
+<<button "Milk them yourself">>
+<<script>>
+Dialog.setup("Milk yourself", "milkyourself");
+Dialog.wiki(Story.get("milk_yourself").processText());
+Dialog.open();
+<</script>>
+<</button>>
+<</if>>
+
+::time_passes [widget]
+<<widget "timepasses">><<silently>>
+
+<<if $PC.lactation != 0>>
+	<<if $PC.milkLevel == 25>>
+		<<script>>
+		Dialog.setup("Milk yourself", "milkyourself");
+		Dialog.wiki(Story.get("milk_yourself").processText());
+		Dialog.open();
+		<</script>>
+	<<else>>
+		<<set _tempMilkLevel = $PC.milkLevel>>
+		<<set $PC.milkLevel = $PC.milkLevel + $PC.lactation>>
+
+		<<if $PC.milkLevel < 5 >>
+			<<set $playerMilkMessage = "Your breasts feel light and empty of milk.">>
+		<<elseif $PC.milkLevel < 10 >>
+			<<set $playerMilkMessage = "Your breasts are beginning to feel heavier as they fill with milk.">>
+		<<elseif $PC.milkLevel < 15 >>
+			<<set $playerMilkMessage = "Your breasts are swollen with milk.">>
+		<<elseif $PC.milkLevel < 20 >>
+			<<set $playerMilkMessage = "Your breasts are uncomfortably full, and milk occassionaly drips from your teats.">>
+		<<elseif $PC.milkLevel < 26 >>
+			<<set $playerMilkMessage = "Milk is constantly dripping from your swollen teats as they ache to be drained.">>
+		<<else>>
+			<<set $PC.milkLevel = 25 >>
+			<<set $playerMilkMessage = "Milk is constantly dripping from your swollen teats as they ache to be drained.">>
+		<</if>>
+
+		<<if _tempMilkLevel < 5 || $PC.MilkLevel > 4>>
+			<<alert "milk">>
+		<<elseif _tempMilkLevel < 10 || $PC.MilkLevel > 9>>
+			<<alert "milk">>
+		<<elseif _tempMilkLevel < 15 || $PC.MilkLevel > 14>>
+			<<alert "milk">>
+		<<elseif _tempMilkLevel < 20 || $PC.MilkLevel > 19>>
+			<<alert "milk">>
+		<<elseif _tempMilkLevel < 25 || $PC.MilkLevel > 24>>
+			<<set $forceMilking = 1 >>
+			<<alert "milk">>
+		<<elseif _tempMilkLevel == 25 || $PC.MilkLevel == 25>>
+			<<set $forceMilking = 1 >>
+			<<alert "milk">>
+		<</if>>
+	<</if>>
+<</if>>
+<<updatebar>>
+<</silently>><</widget>>
+
+
+
+
+::StoryCaption
+Your current Lust is <<print $PC.currentLustCount>>%
+Your current Will is <<print $PC.will>>%
+Your current Lactation Level is <<print $PC.lactation>>
+Your current Milk Level is <<print $PC.milkLevel>>
+
+::StoryBanner
+
+
+:: StoryMenu
+
+<<if $PC.name != "">>
+<<link "$PC.name">>
+<<script>>
+Dialog.setup("Character Viewer", "charview");
+Dialog.wiki(Story.get("pc_look").processText());
+Dialog.open();
+<</script>>
+<</link>>
+<</if>>
+
+<<if $priestess != false>>
+<<link "$priestess.name">>
+<<script>>
+Dialog.setup("Character Viewer", "charview");
+Dialog.wiki(Story.get("priestess_look").processText());
+Dialog.open();
+<</script>>
+<</link>>
+<</if>>
+
+<<link "Masturbate">>
+<<script>>
+Dialog.setup("Pleasure yourself", "masturbate");
+Dialog.wiki(Story.get("masturbate").processText());
+Dialog.open();
+<</script>>
+<</link>>
+
+<<link "Milk Yourself">>
+<<script>>
+Dialog.setup("Milk yourself", "milkyourself");
+Dialog.wiki(Story.get("milk_yourself").processText());
+Dialog.open();
+<</script>>
+<</link>>
+
+<<link "Will +">><<willchange 10>><</link>>
+<<link "Will -">><<willchange -10>><</link>>
+<<link "Lust +5">><<lustup 5>><</link>>
+<<link "Base Lust +10">><<set $PC.baseLust += 10>><</link>>
+
+<<link "Lactation +5">><<lactationchange 5>><</link>>
+
+<<link "time passes">><<include "time_passes">><</link>>
+
+
+:: pc_look
+Your body is <<print $buildList[$PC.build]>>, with smooth <<print $skinList[$PC.skin]>> skin and striking <<print $eyesList[$PC.eyes]>> eyes.
+Your <<print $hairTypeList[$PC.hairType]>>, <<print $hairColList[$PC.hairColType][$PC.hairCol]>> hair is <<print $hairLengthList[$PC.hairLength]>>.
+Your chest boasts a pair of <<print either($breastSizeWordList[$PC.breastSize])>> <<print $breastSizeList[$PC.breastSize]>> breasts.
+Your <<print $nippleSizeList[$PC.nippleSize]>> <<print $nippleColList[$PC.nippleColType][$PC.nippleCol]>> nipples are each around WIP LONG.
+Your pussy's soft <<print $hairColList[$PC.hairColType][$PC.hairCol]>> curls are <<print $pubicHairList[$PC.pubicHair]>>.
+
+Head: $PC.inventory.headSlot
+Bra: $PC.inventory.braSlot
+Harness: $PC.inventory.harnessSlot
+Shirt: $PC.inventory.shirtSlot
+Arms: $PC.inventory.armsSlot
+Panties: $PC.inventory.pantiesSlot
+Underbottoms: $PC.inventory.underbottomsSlot
+Bottoms: $PC.inventory.bottomsSlot
+Socks: $PC.inventory.socksSlot
+Shoes: $PC.inventory.shoesSlot
+
+Mouth: $PC.inventory.mouthSlot
+Neck: $PC.inventory.neckSlot
+Breasts: $PC.inventory.breastsSlot
+L Nipple: $PC.inventory.leftNippleSlot
+R Nipple: $PC.inventory.rightNippleSlot
+Pussy: $PC.inventory.pussySlot
+Clit: $PC.inventory.clitSlot
+Ass: $PC.inventory.assSlot
+
+<<print $playerPregnancyList[$PC.pregnant]>>
+<<if $PC.parasite == "no">>
+Your body does not host any parasites.
+<<else>>
+<<print $playerParasiteList[$PC.parasite][$PC.parasiteStage]>>
+<</if>>
+
+Lust: $PC.currentLustCount / 100
+<<print $playerLustList[$PC.currentLustLevel]>>
+
+Willpower: <<print $PC.will>>%
+
+<<if $PC.sexCount == 0>>
+  You haven't had sex since your journey began.
+<<else>>
+  You've had sex $PC.sexCount times since your journey began.
+<</if>>
+
+<<if $PC.forcedCount == 0>>
+  You have managed to keep your sexual encounters consensual.
+<<else>>
+  Your body has been forcibly violated $PC.forcedCount times since your journey began.
+<</if>>
+
+<<if $PC.masturbateCount == 0>>
+  You haven't pleasured yourself since your journey began.
+<<else>>
+  You've brought yourself to climax $PC.masturbateCount times since your journey began.
+<</if>>
+
+Sexual experience levels:
+Mouth - $PC.oralXP
+Pussy - $PC.vaginalXP
+Ass - $PC.analXP
+Pleasuring others - $PC.pleasuringXP
+
+
+:: priestess_look
+$priestess.name's body is <<print $buildList[$priestess.build]>>, with smooth <<print $skinList[$priestess.skin]>> skin and striking <<print $eyesList[$priestess.eyes]>> eyes.
+$priestess.name's <<print $hairTypeList[$priestess.hairType]>>, <<print $hairColList[$priestess.hairColType][$priestess.hairCol]>> hair is <<print $hairLengthList[$priestess.hairLength]>>.
+$priestess.name's chest boasts a pair of <<print either($breastSizeWordList[$priestess.breastSize])>> <<print $breastSizeList[$priestess.breastSize]>> breasts.
+$priestess.name's <<print $nippleSizeList[$priestess.nippleSize]>> <<print $nippleColList[$priestess.nippleColType][$priestess.nippleCol]>> nipples are each around WIP LONG.
+$priestess.name's pussy's soft <<print $hairColList[$priestess.hairColType][$priestess.hairCol]>> curls are <<print $pubicHairList[$priestess.pubicHair]>>.
+
+Head: $priestess.inventory.headSlot
+Bra: $priestess.inventory.braSlot
+Harness: $priestess.inventory.harnessSlot
+Shirt: $priestess.inventory.shirtSlot
+Arms: $priestess.inventory.armsSlot
+Panties: $priestess.inventory.pantiesSlot
+Underbottoms: $priestess.inventory.underbottomsSlot
+Bottoms: $priestess.inventory.bottomsSlot
+Socks: $priestess.inventory.socksSlot
+Shoes: $priestess.inventory.shoesSlot
+
+Mouth: $priestess.inventory.mouthSlot
+Neck: $priestess.inventory.neckSlot
+Breasts: $priestess.inventory.breastsSlot
+L Nipple: $priestess.inventory.leftNippleSlot
+R Nipple: $priestess.inventory.rightNippleSlot
+Pussy: $priestess.inventory.pussySlot
+Clit: $priestess.inventory.clitSlot
+Ass: $priestess.inventory.assSlot
+
+Lust: $priestess.currentLustCount / 100
+Willpower: <<print $priestess.will>>%
+
+<<if $priestess.sexCount == 0>>
+  $priestess.name hasn't had sex since she joined you.
+<<else>>
+  $priestess.name has had sex $priestess.sexCount times since she joined you.
+<</if>>
+
+Sexual experience levels:
+Mouth - $priestess.oralXP
+Pussy - $priestess.vaginalXP
+Ass - $priestess.analXP
+Pleasuring others - $priestess.pleasuringXP
+
+::update_bar [widget]
+<<widget "updatebar">><<silently>>
+<<replace "#story-banner">><<display "StoryBanner">><</replace>>
+<<replace "#story-caption">><<display "StoryCaption">><</replace>>
+<</silently>><</widget>>
+
+
+
+
+
+:: Town Square
+You arrive at the town of Eriale in high spirits. Although many have come before you, you belive that this time the Labyrinth has met its match.
+
+As you stroll through the town square, you are approached by a priestess in pure white robes. "Excuse me, but are you $PC.name?"
+
+You stop and turn to inspect the priestess. Who do you see?
+<<link "A slender woman with pale skin and strawberry-blonde hair" "meet_priestess">><<set $priestess = $alanja>><</link>>
+<<link "A dark-skinned woman with curly black hair and clear hazel eyes" "meet_priestess">><<set $priestess = $raia>><</link>>
+<<link "A voluptuous woman with olive skin and long chestnut hair" "meet_priestess">><<set $priestess = $jeneae>><</link>>
+
+
+::meet_priestess
+The priestess is covered head to toe, but modesty is obviously not the goal of her robes. They are thin and sheer, offering many tantalising glimpses of the $priestess.skin skin beneath.
+As she moves, the fabric slides over her body and displays the curve of a buttock here, a breast there.
+"who's asking?"
+The woman smiles and bows her head slightly. "I am $priestess.name, a priestess of the Temple of Ciele. I have been sent to greet you, as your arrival has bee Seen by our order."
+A $priestess.skin hand emerges from the folds of her robe and extends in a gesture both welcoming and submissive. "I am at your service, and will assist you in any way I can prior to your pilgrimage in Her divine work."
+She must be referring to the Labyrinth. You smile at the idea of yourself as a pilgrim, or in any way pious; you're here for the promise of power and riches, and hopefully for a good fuck along the way.
+"I'm not sure if you've got the right traveler, $priestess.name. I may disappoint your holy sensibilities."
+$priestess.name smiles with more than a hint of mischief. "Our order is pledged to help all who come to Her work, regardless of their character. I am at your service in whatever you require."
+You consider her words, taking the time to ogle her thoroughly as you do.
+"So basically, you'll do whatever I ask until I enter the Labyrinth."
+Her smile is unreadable this time. "Yes, my Lady."
+
+You feel the temptation to test her offer of service. Of course, the sensible thing would be to get her to [[show you around the town|town_tour]], but the idea of [[taking her somewhere more private|more_private]] is also appealing. Of course, you could always test her right here and tell her to [[show you what she's offering|priestess_strip]]...
+
+
+:: town_tour
+
+
+:: more_private
+As much as you should really be getting a tour of the town, $priestess.name looks far too tempting to pass up the opportunity to ejoy her... fully.
+"Well, $priestess.name, perhaps you should show me to a more private place where we can get to know each other a little better."
+$priestess.name bows her head with a slight smile. "I can take you to an inn that will be able to provide you a room. Otherwise, my temple is always open for those who seek to travel Her path."
+
+The idea of a nice private room in which to explore $priestess.name appeals to you, and a place of worship seems like an odd choice for the kind of activities you have in mind. Having said that, considering the nature of the goddess that they worship you suspect that it's not a place of chaste piety. Plus, there's always the chance that other priestesses might share $priestess.name's enthusiasm for service...
+[[An inn room is the safest option|inn_room]]
+[[The temple of Ciele sounds interesting|temple_room]]
+
+:: priestess_strip
+"You say that your duty is to fulfil any needs I might have?"
+"Of course, my lady."
+"Whatever they might be?"
+"I am bound by my pledge to the Goddess herself, and will obey your every word - as long as your commands do not violate Her wishes for the world."
+You take a moment to reflect on her words, unable to supress the desire to see just how far you can go. "Very well, $priestess.name. Take off your clothes and stand naked before me."
+
+She follows your order without the slightest hesitation, shrugging off her white robe and letting it fall to the ground. She appears to have no problem with this public nudity, and you're sure that she has arched her back a little to better display her <<print either($breastSizeWordList[$PC.breastSize])>> <<print $breastSizeList[$PC.breastSize]>> breasts.
+
+People are watching the two of you now. You're obviously a traveler and adventurer, and while the Priestesses are probably a fairly common sight around town, a gorgeous naked woman is not. A few people stop to watch at a discreet distance, but some are not so polite.
+
+A group of noisy, burly men approaches you and $priestess.name. The men are openly pointing and leering at $priestess.name, and as they get closer you overhear them making some very forward observations about your own body as well. Their leader is a heavily-built man with the look of a labourer, and he is the one that addresses you.
+"Another one here to plunder our treasure, hey? Fucking adventurers, always walking around town like they own the place. How about you do something useful for a change and give us a good time, you and that shameless slut?"
+
+The men laugh and make lewd gestures, obviously boasting to each other about what they would do to you both. You hesitate - your instinct is to tell them to fuck off, but there are five of them and they all look like they're used to a brawl. You're not sure you could fight them off on your own, and $priestess.name seems far too submissive to be helpful.
+
+You could try to take advantage of the men's arrogance - perhaps if you beat their leader in a [[fistfight|beat_lead_thug]] they would think better of their proposition?
+Then again, $priestess.name doesn't seem concerned about their attention. Maybe if you [[offer her body|priestess_gangbanged]] to the men they will be satisfied?
+Otherwise, you might not need to beat them all if you put up [[enough of a fight|gangbanged_by_thugs]] to draw attention. There are city watch guards around somewhere, after all.
+
+
+:: beat_lead_thug
+You’ve seen plenty of men like this before - loud, lewd, and trying desperately to impress each other with how tough they are. If you show up their leader, there’s every chance that they’ll leave you alone.
+
+“You seem to think you’re man enough to handle her.” You plant your feet and rest your hands on your hips. “I guess that means you’ve got what it takes to get through me.”
+You were hoping that your resistance would at least register, but the lead thug just roars with laughter. Oh, well - it will have to be fists.
+You step back into a loose fighter’s stance, not wanting to give away the extent of your martial training, and give your opponent a patronising smile.
+
+The big man turns to his companions with a ‘this-bitch-is-crazy’ look pantomimed on his face, then shrugs off his coat and turns to face you. “I’m going to enjoy the look on your face when you’re choking on my cock, girl.”
+Your only reply is to step in and throw a probing jab at his face. He blocks it easily, but not with the grace that you’d expect from a trained fighter.
+You can win this.
+
+It doesn’t take long for him to work that out - he manages to keep you from landing any solid hits, but not by much. He’s sweating and cursing as you circle each other, his swings powerful but not fast enough to pose you a real threat.
+You smile as you lean back to allow another swing to sweep past you. “I’m glad you gave me a chance to limber up. I’m going to need it when I get her back to my room.”
+
+The other men laugh, beginning to be won over. The man you’re fighting doesn’t take it well, his face twisting in anger. His movements get bigger and dumber, and before long you’re able to land a flurry of blows in his gut. He falls back, tripping and landing in the hard-packed dirt of the street. You guessed right; the others help him to his feet, but they’re much more interested in giving him shit than in bothering the woman who just landed him on his ass.
+
+“Okay, you eager thing. Clothes back on and follow me.” $priestess.name complies, offering no comment on what just happened. No need to attract additional unwanted attention - better for her to cover that wonderful body until you can get her somewhere more private. You weren’t just talking shit before. Your blood is singing, adrenaline is still rushing through your body, and you’re ready to take full advantage of her offer.
+
+You could take $priestess.name with you as you secure a [[room at the inn|inn_room]], or perhaps there’s sufficent hospitality at the [[Temple of Ciele|temple_room]] for an officially accompanied adventurer. Otherwise, you can avoid any further complications by [[sending her back|send_priestess_back]].
+
+
+:: priestess_gangbanged
+You look over the group of prospective thugs. They’re rough around the edges, but there’s no mistaking the solid build and heavy muscle of men whose work has made them very strong. Better to play it safe - and after all, $priestess.name did say that she would offer whatever you needed.
+“Well, personally I’m not in the market for company this morning, but I’m sure my new friend here would be eager to see what you have to offer.” You reach over and give $priestess.name a loud slap on the ass.
+"You can do whatever you want with her, as long as you don't mind me watching."
+
+There's a murmur among the group, clearly not expecting such an affirmative response. There's no way they're going to pass up your offer though - especially not when you've effectively challenged their capabilities.
+The lead worker steps forward and grabs a handful of $priestess.name's <<print either($breastSizeWordList[$PC.breastSize])>> <<print $breastSizeList[$PC.breastSize]>> breast. When she offers no resistance, he reaches down to grope her <<print $hairColList[$PC.hairColType][$PC.hairCol]>>-furred pussy.
+This seems to galvanise the other men. They push forward and surround $priestess.name, rough hands running over every inch of her <<print $skinList[$PC.skin]>> skin. Her breasts, ass, and pussy recieve particular attention, of course, and it quickly becomes apparent that <<print $priestess.name>>'s body is responding eagerly to their touch. Her <<print $nippleColList[$priestess.nippleColType][$priestess.nippleCol]>> nipples are already standing stiffly outward by the time the men start pulling her into a nearby alley.
+
+It takes mere moments for them to have her down on her knees, a cock in each hand and another in her mouth while the two remaining men reach down to pinch and twist her <<print $nippleColList[$priestess.nippleColType][$priestess.nippleCol]>> teats. You hear a muffled squeal, the first real reaction she's given to her situation, and the men laugh lewdly at the sound.
+
+From your vantage sitting on a water barrel you get a good view of the festivities. $priestess.name lives up to the carnal reputation of her holy order, taking cock after cock like an expert. First they take turns in her mouth, then her pussy - and then their restraint wears out. You can't help but slide a hand under the fabric of your top, tracing your fingers over your delightfully stiff nipples at the sight of what they do to $priestess.name next.
+The men's leader easily lifts her off the ground and impales her on his swollen prick, slamming her down again and again as $priestess.name wraps her legs obligingly around his waist. Then another man spreads her cheeks and takes her from behind, both cocks buried to the hilt in the helpless woman as she is fucked from both sides.
+$priestess.name starts to moan with pleasure then, finally stirred to overwhelming passion as her pussy and ass are filled in unison.
+
+They're well aware of your eyes and your excitement. It pushes them into peak performance, fucking $priestess.name harder and longer than they would be able to if you weren't watching the display of raw, animal lust. They take her in every position they can think of - lying on her back, down on all fours, pressed against the wall, pinned on her belly - there's never more than a moment spent without at least one eager cock pounding her.
+Whichever of the men aren't currently fucking $priestess.name seem to think that you're eager to see her degraded (and to be honest, they're not wrong). They slap her face, her breasts, her ass; they choke her until she almost passes out; they twist and stretch her <<print $nippleSizeList[$PC.nippleSize]>> <<print $nippleColList[$PC.nippleColType][$PC.nippleCol]>> teats until both are swollen and aching.
+
+She can't take it forever. The relentless fucking was one thing, but the constant slapping and the cruel torture they delivered to her nipples pushed $priestess.name over the edge. Her calm resolve fell away, and she became an animal rutting in the street. Her cries and moans echoed through the alley, rhythmic and completely uninhibited. They had her down on all fours now, one man beneath her and another two taking her from both sides. Mouth, pussy and ass filled with hard cock, $priestess pushed her hips back against every thrust and frantically forced her mouth further along the thick shaft buried in her throat.
+
+(UNFINISHED)
+
+
+[[You take her to a hotel to enjoy her yourself|inn_room]]
+[[You take her to the temple to enjoy her yourself|temple_room]]
+[[You send her back to the temple|send_priestess_back]]
+
+
+:: gangbanged_by_thugs [Sex Violated]
+The thugs overwhelm you and drag the two of you into an alley, where they rape you both in every hole.
+<<climax 2>> as the thugs violated you.
+<<silently>>
+
+<<set $PC.sexCount += 5>>
+<<set $PC.forcedCount += 5>>
+<<set $PC.vaginalCount += 3>>
+<<set $PC.analCount += 2>>
+
+<</silently>>
+The thugs overwhelm you easily and drag both of you into an alley, where you are both gangbanged.
+
+[[You both go to the temple to recover and enjoy each others' bodies|temple room]]
+
+
+::inn_room
+You fuck $priestess.name in an inn room.
+
+::temple_room
+You fuck $priestess.name and one of her acalytes in a temple room.
+
+
+
+
+
+
+:: sex_with_priestess_temple
+$priestess is moaning with pleasure as you fuck her with your fingers.
+
+----
+
+<<linkreplace "Her breasts look like they need some attention.">>You use your free hand to squeeze and knead her $priestessBreasts breasts as you fuck her with the other. They feel wonderful under your strong fingers, and she arches her back to press them up against your touch.
+<</linkreplace>>
+
+<<linkreplace "Her nipples look delicous.">>You lean down and take a $priestessNippleCol nipple into your mouth, sucking and biting the stiff nub until $priestess cries out - pleasure and pain hopelessly intermingled in the sound. Encouraged, you devour her other nipple with even more ferocity, working over the sensitive teat with teeth and tongue until you're satisfied and $priestess is panting with lust.
+<</linkreplace>>
+
+
+[[Fuck her harder|sex with priestess (temple) 2]]
+
+
+
+I saw a <span id="moan"><<print either($</span>.
+
+<<link "Breed">>
+	<<replace "#dog">>Catahoula Cur<</replace>>
+<</link>>
+
+
+:: sex_with_priestess_temple_2
+[[Time for her to service you|sex with priestess (temple) 3]]
+
+
+:: sex_with_priestess_hotel
+[[Fuck her harder|sex_with_priestess_hotel_2]]
+
+
+
+
+
+:: send_priestess_back
+Double-click this passage to edit it.
+
+
+:: sex_with_priestess_hotel_2
+[[Time for her to service you|sex with priestess (hotel) 3]]
+
+
+
+
+
+:: Meet Priestess {"position":"196,377","size":"100,100"}
+The woman greeting you is dressed in the traditional white silk of a Labyrinth priestess. Her robes are draped comfortably over her shoulders, flowing down to mid-calf while intricate lacings keep them open enough to completely bare her $priestessBreasts breasts. She has the $priestessSkin skin and $priestessEyes eyes of a $priestessNation woman, and you can't help but let your eyes linger on her undeniably attractive form.
+She smiles at the attention, and leans in to kiss you deeply. Her mouth is warm and soft, her tongue expertly finding your own and stirring a familiar heat between your thighs. By the time she breaks the kiss, your heart is beating a little too fast.
+"I am $priestess, and I welcome you to this sacred ground. I have been chosen to guide you to the start of your journey, and to assist you in making any preparations you may require."
+
+Stepping back, $priestess deftly unlaces her robes and opens them wide. You take in the wonderful sight of her nudity, from the $priestessPubes between her legs to the $priestessNipplesCol of her $priestessNipples nipples. "My body is yours to use in whatever way you see fit until you enter the Labyrinth tomorrow, of course."
+
+You've heard of the Priestesses of Ciele on your journey. They are the holy guardians of the Labyrinth, and possess a strange power that maintains their high position in the governance of the area around the Labyrinth. You had thought that the stories were exaggerated, though - of course horny sailors would tell tall tales of nubile young women offering themselves for the pleasure of adventurers! It seems that your skepticism was misplaced, however, and you're eager to see just how obliging this gorgeous woman of the cloth really is...
+
+[[Tell her to follow you to a hotel.->inn room]]
+[[Ask her to take you to her temple.->temple room]]
+[[Tell her to strip completely, to test her willingness.->priestess strip]]
+
+
+:: sex with priestess (hotel) 3 {"position":"72,949","size":"100,100"}
+<<silently>>
+
+<<if visited() == 1>>
+<<set $sexCount += 1>>
+<<set $forcedCount += 0>>
+<<set $orgasmCount += 3>>
+<</if>>
+
+<</silently>>
+
+
+:: sex with priestess (temple) 3 {"position":"200,948","size":"100,100"}
+<<silently>>
+
+<<if visited() == 1>>
+<<set $sexCount += 2>>
+<<set $forcedCount += 0>>
+<<set $orgasmCount += 2>>
+<</if>>
+
+<</silently>>
+
+
+
+
+
+
+
+
+::lust_up [widget]
+/* This widget takes an integer input and uses it together with the player's Will score to determine their current lust level based on their lust score out of 100.
+It also sets $lustUpMsg. */
+
+<<widget "lustup">>
+<<silently>>
+<<set _lustIncrement = $args[0] * (100 / $PC.will)>>
+<<set $PC.currentLustCount = Math.round($PC.currentLustCount + _lustIncrement)>>
+<<set _lustCompare = $PC.currentLustLevel>>
+
+<<if $PC.currentLustCount < 10>>
+  <<set $PC.currentLustLevel = 0>>
+<<elseif $PC.currentLustCount < 20>>
+  <<set $PC.currentLustLevel = 1>>
+<<elseif $PC.currentLustCount < 30>>
+  <<set $PC.currentLustLevel = 2>>
+<<elseif $PC.currentLustCount < 40>>
+  <<set $PC.currentLustLevel = 3>>
+<<elseif $PC.currentLustCount < 50>>
+  <<set $PC.currentLustLevel = 4>>
+<<elseif $PC.currentLustCount < 60>>
+  <<set $PC.currentLustLevel = 5>>
+<<elseif $PC.currentLustCount < 70>>
+  <<set $PC.currentLustLevel = 6>>
+<<elseif $PC.currentLustCount < 80>>
+  <<set $PC.currentLustLevel = 7>>
+<<elseif $PC.currentLustCount < 90>>
+  <<set $PC.currentLustLevel = 8>>
+<<elseif $PC.currentLustCount < 100>>
+  <<set $PC.currentLustLevel = 9>>
+<<else>>
+  <<set $PC.currentLustCount = 100>>
+  <<set $PC.currentLustLevel = 10>>
+<</if>>
+
+<<if _lustCompare == 10>>
+  <<set $lustUpMsg = "Your body is already at the limits of its arousal.">>
+<<elseif $PC.currentLustLevel == _lustCompare>>
+  <<set $lustUpMsg = "You are a little more aroused.">>
+<<else>>
+  <<set $lustUpMsg = "Your arousal has increased noticeably.">>
+<</if>>
+<<updatebar>>
+<</silently>>
+<</widget>>
+
+
+::will_change [widget]
+/* Takes as input a positive or negative integer and changes the player's Will that much, also sets $willChangeMsg */
+<<widget "willchange">>
+<<silently>>
+
+<<set _willCompare = $PC.will>>
+<<set $PC.will = Math.round($PC.will + $args[0])>>
+
+<<if $PC.will < 0>>
+  <<set $PC.will = 0>>
+<<elseif $PC.will > 200>>
+  <<set $PC.will = 200>>
+<</if>>
+
+<<if _willCompare == $PC.will and $PC.will == 0.1>>
+  <<set $willChangeMsg = "Your mental resistances to the laybrinth's corruption are already at their lowest.">>
+<<elseif _willCompare == $PC.will and $PC.will == 200>>
+  <<set $willChangeMsg = "Your resistance to the labyrinth's corruption is already strong.">>
+<<elseif _willCompare < $PC.will>>
+  <<set $willChangeMsg = "You feel a new resolve to resist the labyrinth's corrupting effects.">>
+<<elseif _willCompare > $PC.will>>
+  <<set $willChangeMsg = "You feel your resolve weakening as the labyrinth seduces you into corruption.">>
+<</if>>
+
+<<updatebar>>
+
+<</silently>>
+<</widget>>
+
+::climax_widget [widget]
+<<widget "climax">><<silently>>
+<<set $PC.orgasmCount = $PC.orgasmCount + $args[0]>>
+<<set _willLost = false>>
+<<set _climaxes = $args[0]>>
+
+<<for _climaxes > 0>>
+  <<set _roll = random(9)>>
+  <<if _roll == 0>>
+    <<willchange -1>>
+    <<set _willLost = true>>
+  <</if>>
+  <<set _climaxes -= 1>>
+<</for>>
+
+<<set $PC.currentLustCount = $PC.currentLustCount - (30 * $args[0])>>
+<<if $PC.currentLustCount < $PC.baseLust>>
+  <<set $PC.currentLustCount = $PC.baseLust>>
+<</if>>
+<<lustup 0>>
+<</silently>>
+<<print "You climaxed " + $args[0] + " times">>
+<<if $PC.currentLustCount > 29>><<print "You could easily come again...">><</if>>
+<<if _willLost>><<print "As the orgasmic pleasure washed over you, you felt your resolve weaken.">><</if>>
+<</widget>>
+
+
+
+::lactation_change [widget]
+/* Takes as input a positive or negative integer and changes the player's lactation rate that much, also sets $playerLactationChangeMsg */
+<<widget "lactationchange">>
+<<silently>>
+
+<<set _lactationCompare = $PC.lactation>>
+<<set $PC.lactation = $PC.lactation + $args[0]>>
+
+<<if $PC.lactation < 0>>
+  <<set $PC.lactation = 0>>
+<<elseif $PC.lactation > 5>>
+  <<set $PC.lactation = 5>>
+<</if>>
+
+<<if _lactationCompare == $PC.lactation and $PC.lactation == 0>>
+  <<set $playerLactationChangeMsg = "">>
+<<elseif _lactationCompare == $PC.lactation and $PC.lactation == 5>>
+  <<set $playerLactationChangeMsg = "Your breasts are already producing milk as quickly as possible.">>
+<<elseif $PC.lactation == 0>>
+  <<set $playerLactationChangeMsg = "You suspect that your breasts are no longer lactating.">>
+<<elseif _lactationCompare < $PC.lactation>>
+  <<set $playerLactationChangeMsg = "You feel like your breasts are producing milk faster than before.">>
+<<elseif _lactationCompare > $PC.lactation>>
+  <<set $playerLactationChangeMsg = "You feel like your breasts' milk production is a little slower than before.">>
+<</if>>
+
+<<updatebar>>
+
+<</silently>>
+<</widget>>
+
+:: milk_yourself
+<<if $PC.milkLevel < 10>>
+  <<set _milkYourselfMsg = "You don't really have enough milk to do that right now.">>
+  <<print _milkYourselfMsg>>
+<<else>>
+  <<if $PC.milkLevel < 15>>
+    <<set _milkYourselfMsg = "You manage to squeeze a fair amount of milk from your teats.">>
+  <<elseif $PC.milkLevel < 20>>
+    <<set _milkYourselfMsg = "Your milk flows freely as you squeeze it from your teats.">>
+  <<elseif $PC.milkLevel < 26>>
+    <<set _milkYourselfMsg = "You squeeze a huge amount of milk from your swollen udders.">>
+  <</if>>
+  <<if $forceMilking == 1>>
+  <<print "Your breasts feel like they are about to burst - you have no choice but to fall to your knees and frantically milk your own teats.">>
+  <<set $forceMilking = 0>>
+  <</if>>
+  <<print _milkYourselfMsg>>
+  <<if $PC.currentLustLevel > 4>>
+    <<print "You are so turned on that you can't resist fingering yourself to a perverted orgasm as you milk your own teats dry. As the orgasmic pleasure washed over you, you felt your resolve weaken.">>
+    <<willchange -1>>
+    <<climax 1>>.
+    <<set $PC.masturbateCount += 1>>
+    <<set $PC.vaginalXP += 5>>
+  <</if>>
+  <<set $PC.milkLevel = 0>>
+  <<set $playerMilkMessage = "Your breasts feel light and empty of milk.">>
+  <<print $playerMilkMessage>>
+
+<</if>>
+
+::masturbate
+<<if $PC.currentLustCount < 30>>
+You aren't really turned on enough to come right now.
+<<elseif $PC.currentLustCount < 60>>
+You finger yourself to a pleasant, if not earth-shattering, climax.
+  <<climax 1>>.
+  <<set $PC.masturbateCount += 1>>
+  <<set $PC.vaginalXP += 5>>
+<<elseif $PC.currentLustCount < 90>>
+You quickly finger yourself to a pleasant climax, but one just isn't enough to satisfy your eager cunt. The second orgasm is much stronger than the first and leaves your whole body tingling.
+  <<climax 2>>.
+  <<set $PC.masturbateCount += 2>>
+  <<set $PC.vaginalXP += 10>>
+<<elseif $PC.currentLustCount < 100>>
+You quickly finger yourself to a pleasant climax, but one just isn't enough to satisfy your eager cunt - and neither is the second. It's not until the third leaves you panting and trembling that you're able to get yourself under control.
+  <<climax 3>>.
+  <<set $PC.masturbateCount += 3>>
+  <<set $PC.vaginalXP += 15>>
+<<else>>
+Frantically, you work the fingers of one hand over your swollen clit until the first orgasm explodes from between your legs. It's not enough, and soon you are writhing on the ground, fingerfucking your own pussy and ass as you moan like a street whore. You come again and again, desperate for release, until finally you are left panting and shaking with the intensity of your release.
+  <<climax 5>>.
+  <<set $PC.masturbateCount += 5>>
+  <<set $PC.vaginalXP += 10>>
+  <<set $PC.analXP += 10>>
+<</if>>
+
+
+
+:: SEXTEST {"position":"694,401","size":"100,100"}
+<<silently>>
+
+<<set $charaLog to []>>
+<<set $sexCount to 0>>
+<<set $forcedCount to 0>>
+<<set $orgasmCount to 0>>
+
+<</silently>>
+
+<span id="nipples1">Your fingers play across her nipples, teasing and stroking the stiff nubs.
+<<link "Harder">><<replace "#nipples1" t8n>><span id="nipples2">You roll her nipples between your fingers, squeezing and tugging gently at them.
+<<link "Harder">><<replace "#nipples2" t8n>>You stretch and twist her nipples roughly, making her cry out in pleasure and pain as you work the stiff teats between your fingers.<</replace>>
+<</link>>
+</span>
+<</replace>>
+<</link>>
+</span>
+
+<span id="stage1">This is the text for stage 1 of the sex narrative.
+<<link "Harder">>
+	<<replace "#stage1" t8n>><span id="stage2">This is the text for stage 2 of the sex narrative.
+<<link "Harder">><<replace "#stage2" t8n>>This is the text for stage 3 of the sex narrative.<</replace>>
+<<silently>>
+
+<<set $sexCount += 1>>
+<<set $forcedCount += 0>>
+<<set $orgasmCount += 1>>
+
+<</silently>>
+<</link>>
+</span>
+<</replace>>
+<</link>>
+</span>
+
+
+:: FUCKEDTEST {"position":"696,533","size":"100,100"}
+<<silently>>
+
+<<set $charaLog to []>>
+<<set $sexCount to 0>>
+<<set $forcedCount to 0>>
+<<set $orgasmCount to 0>>
+
+<</silently>>
+
+<span id="nipples1">Two thin tendrils trace over your nipples, teasing them into stiffness and sending wonderful heat spreading down between your legs.
+<<link "Harder">><<replace "#nipples1" t8n>><span id="nipples2">Thin tendrils wrap around the base of each of your teats, tugging and stretching them just enough to make you desperate for more.
+<<link "Harder">><<replace "#nipples2" t8n>>Thin tendrils are wound tightly around your nipples, squeezing so tightly that the swollen nubs feel as though they might split from the force, and stretching them out from your breasts until you cry out with delicious pain.<</replace>>
+<</link>>
+</span>
+<</replace>>
+<</link>>
+</span>
+
+<span id="stage1">There is a thick tentacle rubbing and circling over your wet cunt, making you moan softly whenever it slides over your clit.
+<<link "Harder">>
+	<<replace "#stage1" t8n>><span id="stage2">A wrist-thick tentacle is slowly working its way in and out of your pussy, stretching you out as it fucks you.
+<<link "Harder">><<replace "#stage2" t8n>>An inhumanly large tentacle-cock is pounding into your cunt, forcing itself deep into you again and again as you gasp and moan.<</replace>>
+<<silently>>
+
+<<set $sexCount += 1>>
+<<set $forcedCount += 0>>
+<<set $orgasmCount += 1>>
+
+<</silently>>
+<</link>>
+</span>
+<</replace>>
+<</link>>
+</span>
+
+
+
+
+
+
+
+
+::character_attributes_init
+<<set $PC = {
+  "name": "",
+  "will": 100,
+  "baseLust": 0,
+  "currentLustCount": 0,
+  "currentLustLevel": 0,
+  "orgasmCount": 0,
+  "sexCount": 0,
+  "analCount": 0,
+  "vaginalCount": 0,
+  "forcedCount": 0,
+  "masturbateCount": 0,
+  "build": random(3),
+  "skin": random(7),
+  "eyes": random(7),
+  "hairLength": random(6),
+  "hairType": random(2),
+  "hairColType": either("normal", "red"),
+  "hairCol": random(5),
+  "breastSize": random(9),
+  "nippleColType": either("brown", "pink"),
+  "nippleCol": random(4),
+  "nippleSize": random(5),
+  "pubicHair": random(2),
+  "oralXP": 0,
+  "vaginalXP": 0,
+  "analXP": 0,
+  "pleasuringXP": 0,
+  "pregnant": 0,
+  "lactation": 0,
+  "milkLevel": 0,
+  "possessed": "no",
+  "infected": "no",
+  "parasite": "no",
+  "parasiteStage": 0,
+  "inventory": {
+    "headSlot": "no",
+    "braSlot": "simple cotton bra",
+    "harnessSlot": "no",
+    "shirtSlot": "rough tunic",
+    "armsSlot": "no",
+    "pantiesSlot": "simple cotton panties",
+    "underbottomsSlot": "warm leggings",
+    "bottomsSlot": "rough skirt",
+    "socksSlot": "adventurer's socks",
+    "shoesSlot": "simple boots",
+    "mouthSlot": "no",
+    "neckSlot": "no",
+    "breastsSlot": "no",
+    "leftNippleSlot": "no",
+    "rightNippleSlot": "no",
+    "pussySlot": "no",
+    "clitSlot": "no",
+    "assSlot": "no"
+    }
+  }>>
+
+/* Builds come in four varieties, but aren't incremented. */
+<<set $buildList = [
+"petite",
+"medium",
+"athletic",
+"voluptuous"
+]>>
+
+/* Skin colour comes in eight varieties, values 0-7. */
+<<set $skinList = [
+"pale",
+"light",
+"lightly-tanned",
+"tan",
+"olive",
+"light brown",
+"nut-brown",
+"dark brown"
+]>>
+
+/* Hair type comes in three varieties, but is not incremented. */
+<<set $hairTypeList = [
+"straight",
+"wavy",
+"curly"
+]>>
+
+/* Hair colour comes in two varieties, normal and red. Each has values 0-5. */
+<<set $hairColList = {
+"normal": [
+  "white",
+  "blonde",
+  "light brown",
+  "brown",
+  "dark brown",
+  "black"],
+"red": [
+  "white",
+  "strawberry-blonde",
+  "ginger",
+  "red",
+  "chestnut",
+  "black"]
+}>>
+
+/* Hair length comes in seven varieties, with values 0-6. */
+<<set $hairLengthList = [
+"close-shaven",
+"short",
+"shoulder-length",
+"long",
+"hip-length",
+"knee-length",
+"floor-length"
+]>>
+
+/* Eye colour comes in eight varieties, with values 0-7. */
+<<set $eyesList = [
+"grey",
+"ice-blue",
+"blue",
+"blue-green",
+"green",
+"hazel",
+"brown",
+"dark brown"
+]>>
+
+/* Breast size comes in ten varieties, with values 0-9. */
+<<set $breastSizeList = [
+"A-cup",
+"B-cup",
+"C-cup",
+"D-cup",
+"E-cup",
+"F-cup",
+"G-cup",
+"H-cup",
+"I-cup",
+"J-cup"
+]>>
+
+/* Breast size adjectives - there are three for each size, using the same 0-9 range. */
+<<set $breastSizeWordList = {
+  0: ["diminuitive", "tiny", "cute"],
+  1: ["cute", "little", "perky"],
+  2: ["perky", "firm", "taut"],
+  3: ["taut", "proud", "generous"],
+  4: ["generous", "buxom", "plump"],
+  5: ["plump", "impressive", "considerable"],
+  6: ["considerable", "pendulous", "heavy"],
+  7: ["heavy", "bounteous", "huge"],
+  8: ["huge", "ungainly", "massive"],
+  9: ["massive", "gigantic", "cartoonish"]
+}>>
+
+/* Nipple colour comes in two varieties, brown and pink. Each has values 0-4. */
+<<set $nippleColList = {
+"brown": [
+  "pale brown",
+  "russet",
+  "chocolate-brown",
+  "dark brown",
+  "black-brown",
+  ],
+"pink": [
+  "pale pink",
+  "light pink",
+  "pink",
+  "dark pink",
+  "ruby",
+  ]
+}>>
+
+/* Nipple colour comes in six varieties, with values 0-5. */
+<<set $nippleSizeList = [
+"tiny",
+"small",
+"average",
+"large",
+"huge",
+"long, thick"
+]>>
+
+/* Pubic hair comes in three varieties, with values 0-2. */
+<<set $pubicHairList = [
+"clean-shaven",
+"trimmed",
+"left natural"
+]>>
+
+/* Lust builds from 0 to 9, at which point it becomes uncontrollable and must be released. */
+<<set $playerLustList = [
+"You don't feel noticably turned on.",
+"You feel the first stirrings of heat between your legs.",
+"There's a noticeable warmth building in your sex.",
+"You are undeniably aroused.",
+"The heat between your legs is becoming insistent.",
+"You feel really turned on.",
+"Your cunt is aching with lust.",
+"You're so turned on that it's hard to think straight.",
+"You are desperately aroused.",
+"You are on the verge of losing yourself to the burning lust that is filling your body.",
+"You are completely consumed with lust, unable to think about anything other than being fucked and used and the sweet release of climax."
+]>>
+
+/* Pregnancy builds from 0 to 9, incrementing at different speeds for different impregnations. 9 has no description because reaching that count triggers a birth cutscene. */
+<<set $playerPregnancyList = [
+"You are not pregnant.",
+"You feel a little odd, as though there is a warmth in your belly.",
+"There is an unmistakeable sense of something quickening in your belly.",
+"Your belly is a little more rounded than ususal, hinting at what is growing inside.",
+"Your pregnancy is now showing clearly, although it still has a ways to go.",
+"The size of your pregnant stomach is beginning to become an inconvenience.",
+"Your pregnancy is now apparent at a glance - there is no hiding your swollen belly.",
+"You are heavily pregnant.",
+"Your belly is round and swollen fit to burst - soon you will give birth to the new life within you."
+]>>
+
+/* Lactation occurs on a speed scale from 0 to 5 and can be increased or decreased by various things. */
+<<set $playerLactationList = [
+"Your breasts feel lighter after being emptied of their milk.",
+"Your breasts are beginning to feel heavier as they fill with milk.",
+"Your breasts are swollen with milk.",
+"Your breasts are uncomfortably full, and milk occassionaly drips from your teats.",
+"Milk is constantly dripping from your swollen teats as they ache to be drained."
+]>>
+
+/* Parasites build from 0 to 3, incrementing at different speeds for different parasites. Stage 3 triggers a cutscene of the parasite's ultimate effect. */
+<<set $playerParasiteList = {
+  "breeder tentacle": [
+    "You have the unsettling feeling of something lodged deep in your ass.",
+    "To your horror, something is growing in your ass - and you can feel it stir occassionally.",
+    "Your ass is filled by a thick tentacle that seems to have grown from within you."
+  ]
+}>>
+
+:: character_creation [start]
+
+Where are you from?
+You are from the cold northen regions of <<link "the Vales" "Intro">><<generatecharacter "Valewain">><<set $PC = $tempChar>><<unset $tempChar>><</link>>
+You have travelled from the populous temperate lands of <<link "Laith" "Intro">><<generatecharacter "Laithlander">><<set $PC = $tempChar>><<unset $tempChar>><</link>>
+You hail from the sun-bathed southern continent <<link "Merrin" "Intro">><<generatecharacter "Merrinan">><<set $PC = $tempChar>><<unset $tempChar>><</link>>
+You are a world-traveler, the product of <<link "many peoples and places" "Intro">><<generatecharacter "Random">><<set $PC = $tempChar>><<unset $tempChar>><</link>>
+
+<<link "I want full control" "character_customise">><</link>>
+
+:: character_customise
+What is your build?
+<<listbox "$PC.build">>
+  <<option "petite" 0>>
+  <<option "medium" 1>>
+  <<option "athletic" 2>>
+  <<option "voluptuous" 3>>
+<</listbox>>
+
+What colour is your skin?
+<<listbox "$PC.skin">>
+  <<option "pale" 0>>
+  <<option "light" 1>>
+  <<option "lightly-tanned" 2>>
+  <<option "tan" 3>>
+  <<option "olive" 4>>
+  <<option "light brown" 5>>
+  <<option "nut-brown" 6>>
+  <<option "dark brown" 7>>
+<</listbox>>
+
+What type of hair do you have?
+<<listbox "$PC.hairType">>
+  <<option "straight" 0>>
+  <<option "wavy" 1>>
+  <<option "curly" 2>>
+<</listbox>>
+
+What colour is your hair?
+<<listbox "_tempHair">>
+  <<option "white">>
+  <<option "blonde">>
+  <<option "light brown">>
+  <<option "brown">>
+  <<option "dark brown">>
+  <<option "black">>
+  <<option "white2">>
+  <<option "strawberry-blonde">>
+  <<option "ginger">>
+  <<option "red">>
+  <<option "chestnut">>
+  <<option "black2">>
+<</listbox>>
+
+<<link "set hair">>
+<<silently>><<switch _tempHair>>
+  <<case "white">>
+  <<set $PC.hairColType = "normal">>
+  <<set $PC.hairCol = 0>>
+  <<case "blonde">>
+  <<set $PC.hairColType = "normal">>
+  <<set $PC.hairCol = 1>>
+  <<case "light brown">>
+  <<set $PC.hairColType = "normal">>
+  <<set $PC.hairCol = 2>>
+  <<case "brown">>
+  <<set $PC.hairColType = "normal">>
+  <<set $PC.hairCol = 3>>
+  <<case "dark brown">>
+  <<set $PC.hairColType = "normal">>
+  <<set $PC.hairCol = 4>>
+  <<case "black">>
+  <<set $PC.hairColType = "normal">>
+  <<set $PC.hairCol = 5>>
+  <<case "white2">>
+  <<set $PC.hairColType = "red">>
+  <<set $PC.hairCol = 0>>
+  <<case "strawberry-blonde">>
+  <<set $PC.hairColType = "red">>
+  <<set $PC.hairCol = 1>>
+  <<case "ginger">>
+  <<set $PC.hairColType = "red">>
+  <<set $PC.hairCol = 2>>
+  <<case "red">>
+  <<set $PC.hairColType = "red">>
+  <<set $PC.hairCol = 3>>
+  <<case "chestnut">>
+  <<set $PC.hairColType = "red">>
+  <<set $PC.hairCol = 4>>
+  <<case "black2">>
+  <<set $PC.hairColType = "red">>
+  <<set $PC.hairCol = 5>>
+<</switch>><</silently>>
+<</link>>
+
+How long is your hair?
+<<listbox "$PC.hairLength">>
+  <<option "close-shaven" 0>>
+  <<option "short" 1>>
+  <<option "shoulder-length" 2>>
+  <<option "long" 3>>
+  <<option "hip-length" 4>>
+  <<option "knee-length" 5>>
+  <<option "floor-length" 6>>
+<</listbox>>
+
+What colour are your eyes?
+<<listbox "$PC.eyes">>
+  <<option "grey" 0>>
+  <<option "ice-blue" 1>>
+  <<option "blue" 2>>
+  <<option "blue-green" 3>>
+  <<option "green" 4>>
+  <<option "hazel" 5>>
+  <<option "brown" 6>>
+  <<option "dark brown" 7>>
+<</listbox>>
+
+What size are your breasts?
+<<listbox "$PC.breastSize">>
+  <<option "A-cup" 0>>
+  <<option "B-cup" 1>>
+  <<option "C-cup" 2>>
+  <<option "D-cup" 3>>
+  <<option "E-cup" 4>>
+  <<option "F-cup" 5>>
+  <<option "G-cup" 6>>
+  <<option "H-cup" 7>>
+  <<option "I-cup" 8>>
+  <<option "J-cup" 9>>
+<</listbox>>
+
+What colour are your nipples?
+<<listbox "_tempNipples">>
+  <<option "pale brown">>
+  <<option "russet">>
+  <<option "chocolate-brown">>
+  <<option "dark brown">>
+  <<option "black-brown">>
+  <<option "pale pink">>
+  <<option "light pink">>
+  <<option "pink">>
+  <<option "dark pink">>
+  <<option "reddish-pink">>
+<</listbox>>
+
+<<link "set nipple colour">>
+<<silently>><<switch _tempNipples>>
+  <<case "pale brown">>
+  <<set $PC.nippleColType = "brown">>
+  <<set $PC.nippleCol = 0>>
+  <<case "russet">>
+  <<set $PC.nippleColType = "brown">>
+  <<set $PC.nippleCol = 1>>
+  <<case "chocolate-brown">>
+  <<set $PC.nippleColType = "brown">>
+  <<set $PC.nippleCol = 2>>
+  <<case "dark brown">>
+  <<set $PC.nippleColType = "brown">>
+  <<set $PC.nippleCol = 3>>
+  <<case "black-brown">>
+  <<set $PC.nippleColType = "brown">>
+  <<set $PC.nippleCol = 4>>
+  <<case "pale pink">>
+  <<set $PC.nippleColType = "pink">>
+  <<set $PC.nippleCol = 0>>
+  <<case "light pink">>
+  <<set $PC.nippleColType = "pink">>
+  <<set $PC.nippleCol = 1>>
+  <<case "pink">>
+  <<set $PC.nippleColType = "pink">>
+  <<set $PC.nippleCol = 2>>
+  <<case "dark pink">>
+  <<set $PC.nippleColType = "pink">>
+  <<set $PC.nippleCol = 3>>
+  <<case "ruby">>
+  <<set $PC.nippleColType = "pink">>
+  <<set $PC.nippleCol = 4>>
+<</switch>><</silently>><</link>>
+
+What size are your nipples?
+<<listbox "$PC.nippleSize">>
+  <<option "tiny" 0>>
+  <<option "small" 1>>
+  <<option "average" 2>>
+  <<option "large" 3>>
+  <<option "huge" 4>>
+  <<option "long, thick" 5>>
+<</listbox>>
+
+What length is your pubic hair?
+<<listbox "$PC.nippleSize">>
+  <<option "clean-shaven" 0>>
+  <<option "trimmed" 1>>
+  <<option "left natural" 2>>
+<</listbox>>
+
+[[Intro]]
+
+:: character_randomiser [widget]
+<<widget "generatecharacter">><<silently>>
+<<if $args[0] == "Valewain">>
+<<set $tempChar = {
+  "name": "",
+  "will": 100,
+  "baseLust": 0,
+  "currentLustCount": 0,
+  "currentLustLevel": 0,
+  "orgasmCount": 0,
+  "sexCount": 0,
+  "forcedCount": 0,
+  "masturbateCount": 0,
+  "build": random(1),
+  "skin": random(1),
+  "eyes": random(2),
+  "hairLength": random(1, 4),
+  "hairType": random(1),
+  "hairColType": either("normal", "red"),
+  "hairCol": random(2),
+  "breastSize": random(2),
+  "nippleColType": "pink",
+  "nippleCol": random(2),
+  "nippleSize": random(1, 3),
+  "pubicHair": random(2),
+  "oralXP": 0,
+  "vaginalXP": 0,
+  "analXP": 0,
+  "pleasuringXP": 0,
+  "pregnant": 0,
+  "lactation": 0,
+  "milkLevel": 0,
+  "possessed": "no",
+  "infected": "no",
+  "parasite": "no",
+  "parasiteStage": 0
+  }>>
+
+<<elseif $args[0] == "Laithlander">>
+<<set $tempChar = {
+  "name": "",
+  "will": 100,
+  "baseLust": 0,
+  "currentLustCount": 0,
+  "currentLustLevel": 0,
+  "orgasmCount": 0,
+  "sexCount": 0,
+  "forcedCount": 0,
+  "masturbateCount": 0,
+  "build": random(1, 2),
+  "skin": random(5, 7),
+  "eyes": random(5, 7),
+  "hairLength": random(1, 4),
+  "hairType": random(2),
+  "hairColType": "normal",
+  "hairCol": random(3, 5),
+  "breastSize": random(1, 3),
+  "nippleColType": "brown",
+  "nippleCol": random(2, 4),
+  "nippleSize": random(1, 3),
+  "pubicHair": random(2),
+  "oralXP": 0,
+  "vaginalXP": 0,
+  "analXP": 0,
+  "pleasuringXP": 0,
+  "pregnant": 0,
+  "lactation": 0,
+  "milkLevel": 0,
+  "possessed": "no",
+  "infected": "no",
+  "parasite": "no",
+  "parasiteStage": 0,
+  "inventory": {
+    "headSlot": "no",
+    "braSlot": "simple cotton bra",
+    "harnessSlot": "no",
+    "shirtSlot": "rough tunic",
+    "armsSlot": "no",
+    "pantiesSlot": "simple cotton panties",
+    "underbottomsSlot": "warm leggings",
+    "bottomsSlot": "rough skirt",
+    "socksSlot": "adventurer's socks",
+    "shoesSlot": "simple boots",
+    "mouthSlot": "no",
+    "neckSlot": "no",
+    "breastsSlot": "no",
+    "leftNippleSlot": "no",
+    "rightNippleSlot": "no",
+    "pussySlot": "no",
+    "clitSlot": "no",
+    "assSlot": "no"
+    }
+  }>>
+
+  <<elseif $args[0] == "Merrinan">>
+  <<set $tempChar = {
+    "name": "",
+    "will": 100,
+    "baseLust": 0,
+    "currentLustCount": 0,
+    "currentLustLevel": 0,
+    "orgasmCount": 0,
+    "sexCount": 0,
+    "forcedCount": 0,
+    "masturbateCount": 0,
+    "build": either(1, 3),
+    "skin": random (2, 5),
+    "eyes": random(2, 5),
+    "hairLength": random(1, 4),
+    "hairType": random(2),
+    "hairColType": either("normal", "red"),
+    "hairCol": random(3, 5),
+    "breastSize": random(2, 4),
+    "nippleColType": either("brown", "pink"),
+    "nippleCol": random(1, 2),
+    "nippleSize": random(1, 3),
+    "pubicHair": random(2),
+    "oralXP": 0,
+    "vaginalXP": 0,
+    "analXP": 0,
+    "pleasuringXP": 0,
+    "pregnant": 0,
+    "lactation": 0,
+    "milkLevel": 0,
+    "possessed": "no",
+    "infected": "no",
+    "parasite": "no",
+    "parasiteStage": 0,
+    "inventory": {
+      "headSlot": "no",
+      "braSlot": "simple cotton bra",
+      "harnessSlot": "no",
+      "shirtSlot": "rough tunic",
+      "armsSlot": "no",
+      "pantiesSlot": "simple cotton panties",
+      "underbottomsSlot": "warm leggings",
+      "bottomsSlot": "rough skirt",
+      "socksSlot": "adventurer's socks",
+      "shoesSlot": "simple boots",
+      "mouthSlot": "no",
+      "neckSlot": "no",
+      "breastsSlot": "no",
+      "leftNippleSlot": "no",
+      "rightNippleSlot": "no",
+      "pussySlot": "no",
+      "clitSlot": "no",
+      "assSlot": "no"
+      }
+    }>>
+
+<<elseif $args[0] == "Random">>
+<<set $tempChar = {
+  "name": "",
+  "will": 100,
+  "baseLust": 0,
+  "currentLustCount": 0,
+  "currentLustLevel": 0,
+  "orgasmCount": 0,
+  "sexCount": 0,
+  "forcedCount": 0,
+  "masturbateCount": 0,
+  "build": random(3),
+  "skin": random(7),
+  "eyes": random(7),
+  "hairLength": random(6),
+  "hairType": random(2),
+  "hairColType": either("normal", "red"),
+  "hairCol": random(5),
+  "breastSize": random(9),
+  "nippleColType": either("brown", "pink"),
+  "nippleCol": random(4),
+  "nippleSize": random(5),
+  "pubicHair": random(2),
+  "oralXP": 0,
+  "vaginalXP": 0,
+  "analXP": 0,
+  "pleasuringXP": 0,
+  "pregnant": 0,
+  "lactation": 0,
+  "milkLevel": 0,
+  "possessed": "no",
+  "infected:": "no",
+  "parasite": "no",
+  "parasiteStage": 0,
+  "inventory": {
+    "headSlot": "no",
+    "braSlot": "simple cotton bra",
+    "harnessSlot": "no",
+    "shirtSlot": "rough tunic",
+    "armsSlot": "no",
+    "pantiesSlot": "simple cotton panties",
+    "underbottomsSlot": "warm leggings",
+    "bottomsSlot": "rough skirt",
+    "socksSlot": "adventurer's socks",
+    "shoesSlot": "simple boots",
+    "mouthSlot": "no",
+    "neckSlot": "no",
+    "breastsSlot": "no",
+    "leftNippleSlot": "no",
+    "rightNippleSlot": "no",
+    "pussySlot": "no",
+    "clitSlot": "no",
+    "assSlot": "no"
+    }
+  }>>
+  <</if>>
+
+<</silently>><</widget>>
+
+::npc_init
+<<set $party = ["priestess"]>>
+<<set $priestess = false>>
+<<set $alanja = {
+  "name": "Alanja",
+  "will": 80,
+  "baseLust": 30,
+  "currentLustCount": 30,
+  "currentLustLevel": 2,
+  "orgasmCount": 0,
+  "sexCount": 0,
+  "forcedCount": 0,
+  "sexWithPlayer": false,
+  "build": 0,
+  "skin": 0,
+  "eyes": 1,
+  "hairLength": 3,
+  "hairType": 0,
+  "hairColType": "red",
+  "hairCol": 1,
+  "breastSize": 2,
+  "nippleColType": "pink",
+  "nippleCol": 1,
+  "nippleSize": 1,
+  "pubicHair": 0,
+  "oralXP": 200,
+  "vaginalXP": 100,
+  "analXP": 100,
+  "pleasuringXP": 200,
+  "pregnant": 0,
+  "lactation": 0,
+  "milkLevel": 0,
+  "possessed": "no",
+  "infected:": "no",
+  "parasite": "no",
+  "parasiteStage": 0,
+  "inventory": {
+    "headSlot": "no",
+    "braSlot": "no",
+    "harnessSlot": "no",
+    "shirtSlot": "thin white priestess' robe",
+    "armsSlot": "no",
+    "pantiesSlot": "no",
+    "underbottomsSlot": "no",
+    "bottomsSlot": "thin white priestess' robe",
+    "socksSlot": "white cotton socks",
+    "shoesSlot": "simple boots",
+    "mouthSlot": "no",
+    "neckSlot": "no",
+    "breastsSlot": "no",
+    "leftNippleSlot": "no",
+    "rightNippleSlot": "no",
+    "pussySlot": "no",
+    "clitSlot": "no",
+    "assSlot": "no"
+    }
+  }>>
+
+  <<set $raia = {
+    "name": "Raia",
+    "will": 80,
+    "baseLust": 30,
+    "currentLustCount": 30,
+    "currentLustLevel": 2,
+    "orgasmCount": 0,
+    "sexCount": 0,
+    "forcedCount": 0,
+    "sexWithPlayer": false,
+    "build": 1,
+    "skin": 6,
+    "eyes": 5,
+    "hairLength": 2,
+    "hairType": 2,
+    "hairColType": "normal",
+    "hairCol": 5,
+    "breastSize": 3,
+    "nippleColType": "brown",
+    "nippleCol": 3,
+    "nippleSize": 2,
+    "pubicHair": 1,
+    "oralXP": 100,
+    "vaginalXP": 200,
+    "analXP": 100,
+    "pleasuringXP": 200,
+    "pregnant": 0,
+    "lactation": 0,
+    "milkLevel": 0,
+    "possessed": "no",
+    "infected:": "no",
+    "parasite": "no",
+    "parasiteStage": 0,
+    "inventory": {
+      "headSlot": "no",
+      "braSlot": "no",
+      "harnessSlot": "no",
+      "shirtSlot": "thin white priestess' robe",
+      "armsSlot": "no",
+      "pantiesSlot": "no",
+      "underbottomsSlot": "no",
+      "bottomsSlot": "thin white priestess' robe",
+      "socksSlot": "white cotton socks",
+      "shoesSlot": "simple boots",
+      "mouthSlot": "no",
+      "neckSlot": "no",
+      "breastsSlot": "no",
+      "leftNippleSlot": "no",
+      "rightNippleSlot": "no",
+      "pussySlot": "no",
+      "clitSlot": "no",
+      "assSlot": "no"
+      }
+    }>>
+
+    <<set $jeneae = {
+      "name": "Jeneae",
+      "will": 80,
+      "baseLust": 30,
+      "currentLustCount": 30,
+      "currentLustLevel": 2,
+      "orgasmCount": 0,
+      "sexCount": 0,
+      "forcedCount": 0,
+      "sexWithPlayer": false,
+      "build": 3,
+      "skin": 4,
+      "eyes": 4,
+      "hairLength": 4,
+      "hairType": 1,
+      "hairColType": "normal",
+      "hairCol": 5,
+      "breastSize": 4,
+      "nippleColType": "brown",
+      "nippleCol": 1,
+      "nippleSize": 3,
+      "pubicHair": 2,
+      "oralXP": 100,
+      "vaginalXP": 100,
+      "analXP": 200,
+      "pleasuringXP": 200,
+      "pregnant": 0,
+      "lactation": 0,
+      "milkLevel": 0,
+      "possessed": "no",
+      "infected:": "no",
+      "parasite": "no",
+      "parasiteStage": 0,
+      "inventory": {
+        "headSlot": "no",
+        "braSlot": "no",
+        "harnessSlot": "no",
+        "shirtSlot": "thin white priestess' robe",
+        "armsSlot": "no",
+        "pantiesSlot": "no",
+        "underbottomsSlot": "no",
+        "bottomsSlot": "thin white priestess' robe",
+        "socksSlot": "white cotton socks",
+        "shoesSlot": "simple boots",
+        "mouthSlot": "no",
+        "neckSlot": "no",
+        "breastsSlot": "no",
+        "leftNippleSlot": "no",
+        "rightNippleSlot": "no",
+        "pussySlot": "no",
+        "clitSlot": "no",
+        "assSlot": "no"
+        }
+
+      }>>
