@@ -44,7 +44,7 @@ body, tw-story
 Hundreds of years ago, the depraved sorceress Ciele created this labyrith to safeguard her power once she passed into the next world. Only those who become as perverted and lustful as Ciele herself can reach its centre - and the unimaginable wealth that must wait there.
 
 
-It's time to enter your name in the record of those who have attempted this challenge. <<textbox "$PC.name" "Your name" "Town Square">>
+It is time to enter your name in the record of those who have attempted this challenge. <<textbox "$PC.name" "Your name" "Town Square">>
 
 
 
